@@ -2,9 +2,9 @@
 import streamlit as st
 import json
 
-CONFIG_PATH = "service-config.json"
+CONFIG_PATH = "config/service-config.json"
 
-st.write("Hello, I'm Service C!")
+st.write("Hello, I'm Service A!")
 
 with open(CONFIG_PATH) as config_fp:
     config_file = json.load(config_fp)
