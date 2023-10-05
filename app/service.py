@@ -4,7 +4,7 @@ import json
 
 CONFIG_PATH = "service-config.json"
 
-st.write("Hello, I'm Service A!")
+st.write("Hello, I'm Service C!")
 
 with open(CONFIG_PATH) as config_fp:
     config_file = json.load(config_fp)
