@@ -16,14 +16,14 @@ def make_config_list(services_dict):
     return service_config_list
 
 def run(plan, service_a_count=1, service_b_count=1, service_c_count=1):
-  """
-  Runs some very basic services, for demo purposes.
+    """
+    Runs some very basic services, for demo purposes.
 
-  Args:
-      service_a_count (int): [OPTIONAL] [int] number of instances of Service A to run
-      service_b_count (int): [OPTIONAL] [int] number of instances of Service B to run
-      service_c_count (int): [OPTIONAL] [int] number of instances of Service C to run
-  """
+    Args:
+        service_a_count (int): [OPTIONAL] [int] number of instances of Service A to run
+        service_b_count (int): [OPTIONAL] [int] number of instances of Service B to run
+        service_c_count (int): [OPTIONAL] [int] number of instances of Service C to run
+    """
     service_a_configs = {}
     service_b_configs = {}
     service_c_configs = {}
