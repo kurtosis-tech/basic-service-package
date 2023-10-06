@@ -1,7 +1,6 @@
 config_template_b = read_file("./service-b-config.json.tmpl")
 config_template_c = read_file("./service-c-config.json.tmpl")
 
-
 def make_config_list(services_dict):
     service_config_list = "["
     count = 0
