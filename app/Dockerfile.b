@@ -1,6 +1,6 @@
 FROM python:3.8.18-bookworm
 
-COPY app /app
+COPY service-b /app
 
 WORKDIR /app
 

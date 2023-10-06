@@ -4,9 +4,10 @@ import json
 
 CONFIG_PATH = "config/service-config.json"
 
-st.write("Hello, I'm Service A!")
+st.markdown("**Hello, I'm Service C! I depend on every instance of Service A and Service B.**")
 
 with open(CONFIG_PATH) as config_fp:
     config_file = json.load(config_fp)
 
-st.write("My configuration file is: " + str(config_file))
+st.write("**Here's my configuration file:**")
+st.json(config_file)

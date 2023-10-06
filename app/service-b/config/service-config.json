@@ -1,0 +1,6 @@
+{
+  "service-a": [
+    {"name": "service-a-1", "url": "<URL-PLACE-HOLDER"},
+    {"name": "service-a-2", "url": "<URL-PLACE-HOLDER"}
+  ]
+}
