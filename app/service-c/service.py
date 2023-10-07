@@ -18,7 +18,7 @@ st.set_page_config(layout="wide")
 
 CONFIG_PATH = "config/service-config.json"
 
-if PARTY_MODE:
+if party_mode:
     st.title(":partying_face: SERVICE C IS PARTYING! :tada:")
     st.header(":confetti_ball: I'm partying because an environment variable told me to. :confetti_ball:")
 
