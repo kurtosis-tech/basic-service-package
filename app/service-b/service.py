@@ -8,8 +8,12 @@ st.set_page_config(layout="wide")
 args = sys.argv
 if len(args) == 2:
     party_mode = args[1]
-    if not isinstance(party_mode, bool):
-        st.error("Arg has to be boolean.")
+    if (party_mode == "true"):
+        party_mode = True
+    elif (party_mode == "false"):
+        party_mode = False
+    else:
+        st.error("Arg must be either 'true' or 'false', or empty.")
 else:
     party_mode = False
 

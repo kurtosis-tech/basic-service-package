@@ -64,7 +64,8 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
         config = ServiceConfig(
             "galenmarchetti/service-b",
             ports={"frontend": frontend_port},
-            files={"/app/config": config_artifact_b}
+            files={"/app/config": config_artifact_b},
+            cmd=[str(party_mode).lower()]
         )
         service_b_configs["service-b-" + str(i + 1)] = config
     service_b_dict = plan.add_services(service_b_configs)
