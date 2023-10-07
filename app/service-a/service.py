@@ -9,11 +9,14 @@ CONFIG_PATH = "config/service-config.json"
 with open(CONFIG_PATH) as config_fp:
     config_file = json.load(config_fp)
 
-if config_file['party_mode']:
+if 'party_mode' in config_file and config_file['party_mode']:
     st.title(":partying_face: SERVICE A IS PARTYING! :tada:")
     st.header(":confetti_ball: I'm partying because my configuration file told me to. :confetti_ball:")
 
-st.markdown("**Hello, I'm Service A! I don't depend on anyone.**")
+    st.markdown("**Hello, I'm Service A! I don't depend on anyone.**")
 
-st.write("**Here's my configuration file:**")
-st.json(config_file)
+    st.write("**Here's my configuration file:**")
+    st.json(config_file)
+
+else:
+    st.markdown("**Hello, I'm Service A! I don't depend on anyone.**")
