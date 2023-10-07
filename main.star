@@ -1,3 +1,4 @@
+config_template_a = read_file("./service-a-config.json.tmpl")
 config_template_b = read_file("./service-b-config.json.tmpl")
 config_template_c = read_file("./service-c-config.json.tmpl")
 
@@ -20,7 +21,7 @@ def make_config_list(services_dict):
     return service_config_list
 
 
-def run(plan, service_a_count=1, service_b_count=1, service_c_count=1):
+def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mode=False):
     """
     Runs some very basic services, for demo purposes.
 
@@ -34,9 +35,15 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1):
     service_c_configs = {}
     frontend_port = PortSpec(8501, application_protocol="http")
 
+    template_data_config_a = {"party_mode": party_mode}
+    config_artifact_a = plan.render_templates(config={"service-config.json": struct(
+        template=config_template_a, 
+        data=template_data_config_a
+    )})
     for i in range(service_a_count):
         config = ServiceConfig(
-            "galenmarchetti/service-a", ports={"frontend": frontend_port}
+            "galenmarchetti/service-a", ports={"frontend": frontend_port},
+            files={"/app/config": config_artifact_a},
         )
         service_a_configs["service-a-" + str(i + 1)] = config
     service_a_dict = plan.add_services(service_a_configs)
@@ -57,7 +64,7 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1):
         config = ServiceConfig(
             "galenmarchetti/service-b",
             ports={"frontend": frontend_port},
-            files={"/app/config": config_artifact_b},
+            files={"/app/config": config_artifact_b}
         )
         service_b_configs["service-b-" + str(i + 1)] = config
     service_b_dict = plan.add_services(service_b_configs)
@@ -80,6 +87,7 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1):
             "galenmarchetti/service-c",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_c},
+            env_vars={"PARTY_MODE": str(party_mode).lower()}
         )
         service_c_configs["service-c-" + str(i + 1)] = config
 

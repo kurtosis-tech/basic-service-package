@@ -8,6 +8,10 @@ st.set_page_config(layout="wide")
 args = sys.argv
 if len(args) == 2:
     party_mode = args[1]
+    if not isinstance(party_mode, bool):
+        st.error("Arg has to be boolean.")
+else:
+    party_mode = False
 
 if party_mode:
     st.title(":partying_face: SERVICE B IS PARTYING! :tada:")
