@@ -1,8 +1,17 @@
 # An extremely basic 'service' built using Python and Streamlit
 import streamlit as st
 import json
+import os
+
+PARTY_MODE = os.environ["PARTY_MODE"]
+
+st.set_page_config(layout="wide")
 
 CONFIG_PATH = "config/service-config.json"
+
+if PARTY_MODE:
+    st.title(":partying_face: SERVICE C IS PARTYING! :tada:")
+    st.header(":confetti_ball: I'm partying because an environment variable told me to. :confetti_ball:")
 
 st.markdown("**Hello, I'm Service C! I depend on every instance of Service A and Service B.**")
 

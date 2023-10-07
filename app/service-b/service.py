@@ -1,6 +1,17 @@
 # An extremely basic 'service' built using Python and Streamlit
 import streamlit as st
 import json
+import sys
+
+st.set_page_config(layout="wide")
+
+args = sys.argv
+if len(args) == 2:
+    party_mode = args[1]
+
+if party_mode:
+    st.title(":partying_face: SERVICE B IS PARTYING! :tada:")
+    st.header(":confetti_ball: I'm partying because a command line argument told me to. :confetti_ball:")
 
 CONFIG_PATH = "config/service-config.json"
 
