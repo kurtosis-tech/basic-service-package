@@ -3,7 +3,16 @@ import streamlit as st
 import json
 import os
 
-PARTY_MODE = os.environ["PARTY_MODE"]
+if "PARTY_MODE" in os.environ:
+    party_mode = os.environ["PARTY_MODE"]
+    if (party_mode == "true"):
+        party_mode = True
+    elif (party_mode == "false"):
+        party_mode = False
+    else:
+        st.error("PARTY_MODE environment variable must be either 'true' or 'false', or empty.")
+else:
+    party_mode = False
 
 st.set_page_config(layout="wide")
 
