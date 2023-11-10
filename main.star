@@ -26,9 +26,10 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     Runs some very basic services, for demo purposes.
 
     Args:
-        service_a_count (int): [OPTIONAL] [int] number of instances of Service A to run
-        service_b_count (int): [OPTIONAL] [int] number of instances of Service B to run
-        service_c_count (int): [OPTIONAL] [int] number of instances of Service C to run
+        service_a_count (int): [OPTIONAL] number of instances of Service A to run. defaults to 1
+        service_b_count (int): [OPTIONAL] number of instances of Service B to run. defaults to 1
+        service_c_count (int): [OPTIONAL] number of instances of Service C to run. defaults to 1
+        party_mode (bool): [OPTIONAL] whether to turn on the feature flag "party_mode". defaults to false
     """
     service_a_configs = {}
     service_b_configs = {}
@@ -39,7 +40,7 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     config_artifact_a = plan.render_templates(config={"service-config.json": struct(
         template=config_template_a, 
         data=template_data_config_a
-    )})
+    )}, name="service-a-rendered-config")
     for i in range(service_a_count):
         config = ServiceConfig(
             "h4ck3rk3y/service-a", ports={"frontend": frontend_port},
@@ -57,7 +58,8 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
             "service-config.json": struct(
                 template=config_template_b, data=template_data_config_b
             )
-        }
+        },
+        name="service-b-rendered-config"
     )
 
     for i in range(service_b_count):
@@ -80,7 +82,8 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
             "service-config.json": struct(
                 template=config_template_c, data=template_data_config_c
             )
-        }
+        },
+        name="service-c-rendered-config"
     )
 
     for i in range(service_c_count):
