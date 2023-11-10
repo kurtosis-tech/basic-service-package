@@ -62,12 +62,16 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
         name="service-b-rendered-config"
     )
 
+    if party_mode:
+        service_b_command = ["--party-mode"]
+    else:
+        service_b_command = []
     for i in range(service_b_count):
         config = ServiceConfig(
             "h4ck3rk3y/service-b",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_b},
-            cmd=[str(party_mode).lower()]
+            cmd=service_b_command
         )
         service_b_configs["service-b-" + str(i + 1)] = config
     service_b_dict = plan.add_services(service_b_configs)
