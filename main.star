@@ -26,9 +26,10 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     Runs some very basic services, for demo purposes.
 
     Args:
-        service_a_count (int): [OPTIONAL] [int] number of instances of Service A to run
-        service_b_count (int): [OPTIONAL] [int] number of instances of Service B to run
-        service_c_count (int): [OPTIONAL] [int] number of instances of Service C to run
+        service_a_count (int): [OPTIONAL] number of instances of Service A to run. defaults to 1
+        service_b_count (int): [OPTIONAL] number of instances of Service B to run. defaults to 1
+        service_c_count (int): [OPTIONAL] number of instances of Service C to run. defaults to 1
+        party_mode (bool): [OPTIONAL] whether to turn on the feature flag "party_mode". defaults to false
     """
     service_a_configs = {}
     service_b_configs = {}
@@ -39,10 +40,10 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     config_artifact_a = plan.render_templates(config={"service-config.json": struct(
         template=config_template_a, 
         data=template_data_config_a
-    )})
+    )}, name="service-a-rendered-config")
     for i in range(service_a_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-a", ports={"frontend": frontend_port},
+            "kurtosistech/service-a", ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_a},
         )
         service_a_configs["service-a-" + str(i + 1)] = config
@@ -57,15 +58,20 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
             "service-config.json": struct(
                 template=config_template_b, data=template_data_config_b
             )
-        }
+        },
+        name="service-b-rendered-config"
     )
 
+    if party_mode:
+        service_b_command = ["--", "--party-mode"]
+    else:
+        service_b_command = []
     for i in range(service_b_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-b",
+            "kurtosistech/service-b",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_b},
-            cmd=[str(party_mode).lower()]
+            cmd=service_b_command
         )
         service_b_configs["service-b-" + str(i + 1)] = config
     service_b_dict = plan.add_services(service_b_configs)
@@ -80,12 +86,13 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
             "service-config.json": struct(
                 template=config_template_c, data=template_data_config_c
             )
-        }
+        },
+        name="service-c-rendered-config"
     )
 
     for i in range(service_c_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-c",
+            "kurtosistech/service-c",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_c},
             env_vars={"PARTY_MODE": str(party_mode).lower()}
