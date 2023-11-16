@@ -43,7 +43,7 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     )}, name="service-a-rendered-config")
     for i in range(service_a_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-a", ports={"frontend": frontend_port},
+            "galenmarchetti/service-a", ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_a},
         )
         service_a_configs["service-a-" + str(i + 1)] = config
@@ -63,12 +63,12 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
     )
 
     if party_mode:
-        service_b_command = ["--party-mode"]
+        service_b_command = ["--", "--party-mode"]
     else:
         service_b_command = []
     for i in range(service_b_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-b",
+            "galenmarchetti/service-b",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_b},
             cmd=service_b_command
@@ -92,7 +92,7 @@ def run(plan, service_a_count=1, service_b_count=1, service_c_count=1, party_mod
 
     for i in range(service_c_count):
         config = ServiceConfig(
-            "h4ck3rk3y/service-c",
+            "galenmarchetti/service-c",
             ports={"frontend": frontend_port},
             files={"/app/config": config_artifact_c},
             env_vars={"PARTY_MODE": str(party_mode).lower()}
